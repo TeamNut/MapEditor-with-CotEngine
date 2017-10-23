@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Project">
+      <UniqueIdentifier>{2c1f78fb-f433-4a51-8301-949ce13bea71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{889ccd1b-6f0c-4f3e-bd66-b567bf515f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Tiles">
+      <UniqueIdentifier>{60613f2e-4ca9-4869-9223-8bdeffb8e48c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\Classes\ItemViewComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SaveComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BlockSelfComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MapEditor.cpp">
+      <Filter>Project</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileGrassComponent.cpp">
+      <Filter>Component\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileGrass3Component.cpp">
+      <Filter>Component\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileGrass2Component.cpp">
+      <Filter>Component\Tiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Classes\ItemViewComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SaveComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BlockSelfComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HeadValue.h">
+      <Filter>Project</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MapEditor.h">
+      <Filter>Project</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileGrassComponent.h">
+      <Filter>Component\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileGrass2Component.h">
+      <Filter>Component\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileGrass3Component.h">
+      <Filter>Component\Tiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

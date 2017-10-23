@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Main>
+    <Default MaxObject="20"/>
+    <SavedBlock_0 Sprite="tile_grass_01.png" IsActive="true" GetX="165" GetY="486"/>
+    <SavedBlock_1 Sprite="tile_grass_01.png" IsActive="true" GetX="330" GetY="486"/>
+    <SavedBlock_2 Sprite="tile_grass_01.png" IsActive="true" GetX="330" GetY="324"/>
+    <SavedBlock_3 Sprite="tile_grass_01.png" IsActive="true" GetX="495" GetY="324"/>
+    <SavedBlock_4 Sprite="tile_grass_01.png" IsActive="true" GetX="495" GetY="486"/>
+    <SavedBlock_5 Sprite="tile_grass_01.png" IsActive="true" GetX="825" GetY="162"/>
+    <SavedBlock_6 Sprite="tile_grass_01.png" IsActive="true" GetX="825" GetY="324"/>
+    <SavedBlock_7 Sprite="tile_grass_01.png" IsActive="true" GetX="825" GetY="486"/>
+    <SavedBlock_8 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_9 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_10 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_11 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_12 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_13 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_14 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_15 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_16 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_17 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_18 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+    <SavedBlock_19 Sprite="" IsActive="false" GetX="0" GetY="0"/>
+</Main>
