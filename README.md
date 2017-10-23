@@ -17,6 +17,8 @@ Also you can change gap of grid to grid placing delicacy. But you have to rememb
 ### About place
 You can place block to **drag from bottom item view**. If you mistake placing, you can remove to **press mouse rbutton**. And also you can place more faster to **press E button**. It can place block that you used last time.
 
+Items(tiles) in item view can look around to press button: **comma, period**.
+
 ### About camera move
 Press button: W, A, S, D to move camera position. You can make map more bigger.
 
