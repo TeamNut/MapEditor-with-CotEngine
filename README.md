@@ -9,5 +9,6 @@ Open **HeadValue.h** file and modify following values.
 
 ### When do you wanna place more blocks
 Modify following values in above file.
-* MAX_OJBECT
+* MAX_OBJECT
+
 Also you can change gap of grid to grid placing delicacy. But you have to remember: It tool's object batch method uses *object pooling*. So the MAX_OBJECT grow bigger, become load grow bigger.
