@@ -1,49 +1,21 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "SaveComponent.h"
-//Initialize to use exterior something
+#include "MapEditor.h"
 
-SaveComponent* SaveComponent::Init(const string& str)
+SaveComponent* SaveComponent::Init(MapEditor* lpScene)
 {
-	_str = str;
+	lpMapEditor = lpScene;
 
+	CreateKeyListener();
+	keyListener = GetKeyListener();
 
 	return this;
 }
 
-void SaveComponent::OnEnable()
-{
-
-}
-
-void SaveComponent::Reset()
-{
-
-}
-
-void SaveComponent::Awake()
-{
-
-}
-
-void SaveComponent::Start()
-{
-
-}
-
 void SaveComponent::Update(Time& time)
 {
-	if (IsKeyDown(KeyCode::F5)) Save();
-	if (IsKeyDown(KeyCode::F7)) Load();
-}
-
-void SaveComponent::OnDisable()
-{
-	//printf("OnDiable\n");
-}
-
-void SaveComponent::OnDestroy()
-{
-	//printf("OnDestroy\n");
+	if (keyListener->IsKeyDown(KeyCode::F5)) Save();
+	if (keyListener->IsKeyDown(KeyCode::F7)) Load();
 }
 
 //Ability
@@ -74,18 +46,21 @@ void SaveComponent::Save()
 		block[i] = saveDest.NewElement(blockName);
 		root->LinkEndChild(block[i]);
 		
-		block[i]->SetAttribute("Sprite", MapEditor::Tile_Space[i]->GetComponent<SpriteRenderer>()->GetTexture()->GetFilename().c_str());
-		block[i]->SetAttribute("IsActive", MapEditor::Tile_Space[i]->IsActive());
-		block[i]->SetAttribute("GetX", MapEditor::Tile_Space[i]->GetPosition().x);
-		block[i]->SetAttribute("GetY", MapEditor::Tile_Space[i]->GetPosition().y);
+		block[i]->SetAttribute("Sprite", lpMapEditor->Tile_Space[i]->GetComponent<SpriteRenderer>()->GetTexture()->GetFilename().c_str());
+		block[i]->SetAttribute("IsActive", lpMapEditor->Tile_Space[i]->IsActive());
+		block[i]->SetAttribute("GetX", lpMapEditor->Tile_Space[i]->GetPosition().x);
+		block[i]->SetAttribute("GetY", lpMapEditor->Tile_Space[i]->GetPosition().y);
 	}
-	
+
 	//Save at
 	puts("[SAVE] Enter your save file name without extension");
 	char path[MAX_PATH] = { 0, };
 	scanf("%s", path);
-	strcat(path, ".xml");
+	strcat(path, ".mapinfo");
 	saveDest.SaveFile(path);
+
+	//ENCRYPTING
+	//
 }
 void SaveComponent::Load()
 {
@@ -93,7 +68,10 @@ void SaveComponent::Load()
 	puts("[LOAD] Enter file name you wanna load without extension");
 	char path[MAX_PATH] = { 0, };
 	scanf("%s", path);
-	strcat(path, ".xml");
+	strcat(path, ".mapinfo");
+
+	//DECRYPTING
+	//
 
 	//Load XML
 	tinyxml2::XMLDocument openData;
@@ -119,9 +97,9 @@ void SaveComponent::Load()
 		int getX = lpBlock->IntAttribute("GetX");
 		int getY = lpBlock->IntAttribute("GetY");
 		//Place on the map
-		MapEditor::Tile_Space[i]->GetComponent<SpriteRenderer>()->Init(sprite);
-		MapEditor::Tile_Space[i]->SetActive(isActive);
-		MapEditor::Tile_Space[i]->SetPosition(Vec3(getX, getY));
+		lpMapEditor->Tile_Space[i]->GetComponent<SpriteRenderer>()->Init(sprite);
+		lpMapEditor->Tile_Space[i]->SetActive(isActive);
+		lpMapEditor->Tile_Space[i]->SetPosition(Vec3(getX, getY));
 
 		//Move pointer to the next
 		i++;

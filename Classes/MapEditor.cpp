@@ -1,10 +1,4 @@
 #include "MapEditor.h"
-//Initialize to use exterior something
-Cot::Entity* MapEditor::Tile_Space[] = { 0, };
-Cot::Entity* MapEditor::Tile_for_Show = 0;
-int MapEditor::revisedX = 0;
-int MapEditor::revisedY = 0;
-const char* MapEditor::lastTile = "";
 
 #pragma warning(disable : 4996)
 #define TILE_GAP 50
@@ -17,6 +11,10 @@ using namespace Cot;
 bool MapEditor::Init()
 {
 	graphics->SetClearColor(Color(1.0f, 1.0f, 1.0f));
+	CreateKeyListener();
+	CreateMouseListener();
+	keyListener = GetKeyListener();
+	mouseListener = GetMouseListener();
 	//Value initialize
 	gapX = DEFAULT_GAP_X;
 	gapY = DEFAULT_GAP_Y;
@@ -40,7 +38,7 @@ bool MapEditor::Init()
 	//ItemView
 	//Grass tile
 	ob_Tile_Grass1 = new Entity("GRASS1");
-	ob_Tile_Grass1->AddComponent<TileGrassComponent>()->Init("GRASS1");
+	ob_Tile_Grass1->AddComponent<TileGrassComponent>()->Init(this);
 	SpriteRenderer *RenderTileGrass = ob_Tile_Grass1->AddComponent<SpriteRenderer>()->Init(TILE_GRASS_01);
 	RenderTileGrass->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 	RenderTileGrass->SetDepth(5);
@@ -48,7 +46,7 @@ bool MapEditor::Init()
 	this->AddEntity(ob_Tile_Grass1);
 	//Grass tile 2
 	ob_Tile_Grass2 = new Entity("GRASS2");
-	ob_Tile_Grass2->AddComponent<TileGrass2Component>()->Init("GRASS2");
+	ob_Tile_Grass2->AddComponent<TileGrass2Component>()->Init(this);
 	SpriteRenderer *RenderTileGrass2 = ob_Tile_Grass2->AddComponent<SpriteRenderer>()->Init(TILE_GRASS_02);
 	RenderTileGrass2->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 	RenderTileGrass2->SetDepth(5);
@@ -56,7 +54,7 @@ bool MapEditor::Init()
 	this->AddEntity(ob_Tile_Grass2);
 	//Grass tile 3
 	ob_Tile_Grass3 = new Entity("GRASS3");
-	ob_Tile_Grass3->AddComponent<TileGrass3Component>()->Init("GRASS3");
+	ob_Tile_Grass3->AddComponent<TileGrass3Component>()->Init(this);
 	SpriteRenderer *RenderTileGrass3 = ob_Tile_Grass3->AddComponent<SpriteRenderer>()->Init(TILE_GRASS_03);
 	RenderTileGrass3->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
 	RenderTileGrass3->SetDepth(5);
@@ -77,7 +75,7 @@ bool MapEditor::Init()
 
 		Tile_Space[i] = new Entity(cntStr);
 		Tile_Space[i]->AddComponent<SpriteRenderer>()->Init("");
-		Tile_Space[i]->AddComponent<BlockSelfComponent>()->Init();
+		Tile_Space[i]->AddComponent<BlockSelfComponent>()->Init(this);
 		Tile_Space[i]->SetActive(false);
 		Tile_Space[i]->SetParent(root);
 		this->AddEntity(Tile_Space[i]);
@@ -86,7 +84,7 @@ bool MapEditor::Init()
 	//Temporary solve error about sprite rendering
 	tempSolution = new Entity("ts");
 	tempSolution->AddComponent<SpriteRenderer>()->Init("");
-	tempSolution->AddComponent<SaveComponent>();
+	tempSolution->AddComponent<SaveComponent>()->Init(this);
 	tempSolution->SetParent(root);
 	this->AddEntity(tempSolution);
 
@@ -96,7 +94,7 @@ bool MapEditor::Init()
 void MapEditor::Update(Cot::Time& time)
 {
 	Scene::Update(time);
-	
+
 	//Base working
 	//Temporary solve error about sprite rendering
 	if (tempSolutionPos > 100) tempSolutionState = true;
@@ -112,20 +110,20 @@ void MapEditor::Update(Cot::Time& time)
 	}
 	tempSolution->SetPosition(Vec3(tempSolutionPos, 0));
 	//Revised mouse position by grid
-	revisedX = (int)GetMousePosition().x % gapX < gapX / 2 ?
-				(int)GetMousePosition().x - ((int)GetMousePosition().x % gapX) : gapX + (int)GetMousePosition().x - ((int)GetMousePosition().x % gapX);
-	revisedY = (int)GetMousePosition().y % gapY < gapY / 2 ?
-				(int)GetMousePosition().y - ((int)GetMousePosition().y % gapY) : gapY + (int)GetMousePosition().y - ((int)GetMousePosition().y % gapY);
+	revisedX = (int)mouseListener->GetMousePosition().x % gapX < gapX / 2 ?
+				(int)mouseListener->GetMousePosition().x - ((int)mouseListener->GetMousePosition().x % gapX) : gapX + (int)mouseListener->GetMousePosition().x - ((int)mouseListener->GetMousePosition().x % gapX);
+	revisedY = (int)mouseListener->GetMousePosition().y % gapY < gapY / 2 ?
+				(int)mouseListener->GetMousePosition().y - ((int)mouseListener->GetMousePosition().y % gapY) : gapY + (int)mouseListener->GetMousePosition().y - ((int)mouseListener->GetMousePosition().y % gapY);
 
 	//Fast place
-	if (IsKeyDown(KeyCode::E))
+	if (keyListener->IsKeyDown(KeyCode::E))
 		if (strcmp(lastTile, "") == 0) puts("Cannot found last use");
 		else fastPlace = true;
-	if (IsKeyStay(KeyCode::E))
+	if (keyListener->IsKeyStay(KeyCode::E))
 	{
 		if (strcmp(lastTile, "") != 0) ShowTile(lastTile);
 	}
-	if (IsKeyUp(KeyCode::E) && fastPlace == true)
+	if (this->GetKeyListener()->IsKeyUp(KeyCode::E) && fastPlace == true)
 	{
 		PlaceTile(lastTile);
 		HideTile(lastTile);
@@ -133,14 +131,14 @@ void MapEditor::Update(Cot::Time& time)
 	}
 
 	//Root move
-	if (IsKeyDown(KeyCode::A)) nowX -= DEFAULT_GAP_X;
-	if (IsKeyDown(KeyCode::D))
+	if (keyListener->IsKeyDown(KeyCode::A)) nowX -= DEFAULT_GAP_X;
+	if (keyListener->IsKeyDown(KeyCode::D))
 	{
 		nowX += DEFAULT_GAP_X;
 	
 	}
-	if (IsKeyDown(KeyCode::W)) nowY -= DEFAULT_GAP_Y;
-	if (IsKeyDown(KeyCode::S)) nowY += DEFAULT_GAP_Y;
+	if (keyListener->IsKeyDown(KeyCode::W)) nowY -= DEFAULT_GAP_Y;
+	if (keyListener->IsKeyDown(KeyCode::S)) nowY += DEFAULT_GAP_Y;
 	root->SetPosition(Vec3(nowX, nowY));
 }
 
@@ -164,6 +162,8 @@ void MapEditor::PlaceTile(const char* tileName)
 			Tile_Space[pointer]->SetPosition(Vec3(revisedX, revisedY));
 			Tile_Space[pointer]->SetActive(true);
 			lastTile = tileName;
+
+			printf("RevisedPos: (%d, %d)\n", revisedX, revisedY);
 
 			break;
 		}
@@ -198,7 +198,7 @@ void MapEditor::ShowTile(const char* tileName)
 	Tile_for_Show->SetActive(true);
 	SpriteRenderer* RenderTemp = Tile_for_Show->GetComponent<SpriteRenderer>()->Init(tileName);
 	RenderTemp->SetDepth(6);
-	Tile_for_Show->SetLocalPosition(GetMousePosition());
+	Tile_for_Show->SetLocalPosition(mouseListener->GetMousePosition());
 }
 //Hide tile
 void MapEditor::HideTile(const char* tileName)
@@ -207,15 +207,14 @@ void MapEditor::HideTile(const char* tileName)
 }
 
 //Check area click
-bool MapEditor::IsAreaClick(RECT &rt)
+bool MapEditor::IsAreaClick(RECT &rt, MouseButton bt, MouseListener* mListen)
 {
-	if (IsMouseDown(MouseButton::LButton))
+	if (mListen->IsMouseDown(bt))
 	{
-		//printf("%d %d %d %d vs %d %d\n", rt.left, rt.top, rt.right, rt.bottom, (int)GetMousePosition().x, (int)GetMousePosition().y);
-		if ((int)GetMousePosition().x >= rt.left &&
-			(int)GetMousePosition().x <= rt.right &&
-			(int)GetMousePosition().y <= rt.bottom &&
-			(int)GetMousePosition().y >= rt.top)
+		if ((int)mListen->GetMousePosition().x >= rt.left &&
+			(int)mListen->GetMousePosition().x <= rt.right &&
+			(int)mListen->GetMousePosition().y <= rt.bottom &&
+			(int)mListen->GetMousePosition().y >= rt.top)
 		{
 			return true;
 		}

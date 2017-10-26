@@ -1,59 +1,31 @@
 #include "BlockSelfComponent.h"
-//Initialize to use exterior something
 
 #define RADIUS_BLOCK 75 //Area of half of block
 
-BlockSelfComponent* BlockSelfComponent::Init()
-{
+bool once = false;
 
+BlockSelfComponent* BlockSelfComponent::Init(MapEditor* lpScene)
+{
+	lpMapEditor = lpScene;
+
+	CreateMouseListener();
+
+	_renderer = GetOwner()->GetComponent<SpriteRenderer>();
 	return this;
-}
-
-void BlockSelfComponent::OnEnable()
-{
-
-}
-
-void BlockSelfComponent::Reset()
-{
-
-}
-
-void BlockSelfComponent::Awake()
-{
-
-}
-
-void BlockSelfComponent::Start()
-{
-
 }
 
 void BlockSelfComponent::Update(Time& time)
 {
-	GetOwner()->GetComponent<SpriteRenderer>()->SetDepth(-5);
+	//MDF
+	_renderer->SetDepth(-5);
 	tempVec3 = GetOwner()->GetPosition();
+
 	selfArea = { (int)tempVec3.x - RADIUS_BLOCK, (int)tempVec3.y - RADIUS_BLOCK, (int)tempVec3.x + RADIUS_BLOCK, (int)tempVec3.y + RADIUS_BLOCK };
+	//selfArea = RECT{ (int)_renderer->GetRect().GetMinX(), (int)_renderer->GetRect().GetMinY(), (int)_renderer->GetRect().GetMaxX(), (int)_renderer->GetRect().GetMaxY() };
 
-	//Click detection
-	if (IsMouseStay(MouseButton::RButton) == true)
+	//Remove
+	if (lpMapEditor->IsAreaClick(selfArea, MouseButton::RButton, GetMouseListener()))
 	{
-		if ((int)GetMousePosition().x >= selfArea.left &&
-			(int)GetMousePosition().x <= selfArea.right &&
-			(int)GetMousePosition().y <= selfArea.bottom &&
-			(int)GetMousePosition().y >= selfArea.top)
-		{
-			MapEditor::DeleteTile(GetOwner());
-		}
+		lpMapEditor->DeleteTile(GetOwner());
 	}
-}
-
-void BlockSelfComponent::OnDisable()
-{
-
-}
-
-void BlockSelfComponent::OnDestroy()
-{
-
 }

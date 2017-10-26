@@ -1,30 +1,23 @@
 #pragma once
 
 #include <CotEngine.h>
-#include "MapEditor.h" //To use all of function and value
 #include "HeadValue.h"
 
 using namespace Cot;
 
+class MapEditor;
 Component(TileGrass3Component)
 {
 	COT_COMPONENT(TileGrass3Component);
 private:
-	std::string _str;
-	float _count;
+	MapEditor* lpMapEditor;
 
 	int myPos; //Save position
 	RECT rtTileArea; //Area of entity
 	bool isCarry; //Check item click and drag
 
 public:
-	TileGrass3Component* Init(const string& str);
+	TileGrass3Component* Init(MapEditor* lpScene);
 
-	void OnEnable() override;
-	void Reset() override;
-	void Awake() override;
-	void Start() override;
 	void Update(Time& time) override;
-	void OnDisable() override;
-	void OnDestroy() override;
 };

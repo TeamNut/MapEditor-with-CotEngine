@@ -1,6 +1,11 @@
 # MapEditor-with-CotEngine
 This is a MapEditor made with CotEngine. It can make 2D roll playing games` maps and output to a file that included map information with .xml exterior. 
 ***
+## Updated
+* Fixed method about camera move
+* Re-design inner method about key input
+***
+
 ## Caution
 ### When do you wanna change resolution
 Open **HeadValue.h** file and modify following values.

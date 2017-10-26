@@ -1,44 +1,28 @@
 #include "TileGrass2Component.h"
+#include "MapEditor.h"
 //Initialize to use exterior something
 
 #define THIS_TILE "tile_grass_02.png"
 #define RADIUS_BLOCK 25 //Area of half of block
 
-TileGrass2Component* TileGrass2Component::Init(const string& str)
+TileGrass2Component* TileGrass2Component::Init(MapEditor* lpScene)
 {
-	_str = str;
-
 	puts("Enable grass2");
 
+	lpMapEditor = lpScene;
+
+	CreateKeyListener();
+	CreateMouseListener();
+
 	return this;
-}
-
-void TileGrass2Component::OnEnable()
-{
-
-}
-
-void TileGrass2Component::Reset()
-{
-
-}
-
-void TileGrass2Component::Awake()
-{
-
-}
-
-void TileGrass2Component::Start()
-{
-
 }
 
 void TileGrass2Component::Update(Time& time)
 {
 	//Position Control
-	if (IsKeyStay(KeyCode::Comma) && myPos > 50) myPos--;
+	if (GetKeyListener()->IsKeyStay(KeyCode::Comma) && myPos > 50) myPos--;
 	if (myPos <= 50) myPos = 50;
-	if (IsKeyStay(KeyCode::Period)) myPos++;
+	if (GetKeyListener()->IsKeyStay(KeyCode::Period)) myPos++;
 	GetOwner()->SetLocalPosition(Vec3(myPos + GAP_OF_BLOCK, RESOLUTION_Y - 85));
 
 	//Setting tile area
@@ -46,29 +30,19 @@ void TileGrass2Component::Update(Time& time)
 	rtTileArea = { (int)tempVec3.x - RADIUS_BLOCK, (int)tempVec3.y - RADIUS_BLOCK, (int)tempVec3.x + RADIUS_BLOCK, (int)tempVec3.y + RADIUS_BLOCK };
 
 	//Item drag and drop
-	if (MapEditor::IsAreaClick(rtTileArea) == true)
+	if (lpMapEditor->IsAreaClick(rtTileArea, MouseButton::LButton, GetMouseListener()))
 	{
 		isCarry = true;
 	}
 	if (isCarry == true)
 	{
-		MapEditor::ShowTile(THIS_TILE);
+		lpMapEditor->ShowTile(THIS_TILE);
 
-		if (IsMouseUp(MouseButton::LButton))
+		if (GetMouseListener()->IsMouseUp(MouseButton::LButton))
 		{
-			MapEditor::HideTile(THIS_TILE);
-			MapEditor::PlaceTile(THIS_TILE);
+			lpMapEditor->HideTile(THIS_TILE);
+			lpMapEditor->PlaceTile(THIS_TILE);
 			isCarry = false;
 		}
 	}
-}
-
-void TileGrass2Component::OnDisable()
-{
-	//printf("OnDiable\n");
-}
-
-void TileGrass2Component::OnDestroy()
-{
-	//printf("OnDestroy\n");
 }

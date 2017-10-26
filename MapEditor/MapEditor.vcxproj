@@ -18,26 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Classes\BlockSelfComponent.cpp" />
-    <ClCompile Include="..\Classes\ItemViewComponent.cpp" />
-    <ClCompile Include="..\Classes\MapEditor.cpp" />
-    <ClCompile Include="..\Classes\SaveComponent.cpp" />
-    <ClCompile Include="..\Classes\TileGrass2Component.cpp" />
-    <ClCompile Include="..\Classes\TileGrass3Component.cpp" />
-    <ClCompile Include="..\Classes\TileGrassComponent.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Classes\BlockSelfComponent.h" />
-    <ClInclude Include="..\Classes\HeadValue.h" />
-    <ClInclude Include="..\Classes\ItemViewComponent.h" />
-    <ClInclude Include="..\Classes\MapEditor.h" />
-    <ClInclude Include="..\Classes\SaveComponent.h" />
-    <ClInclude Include="..\Classes\TileGrass2Component.h" />
-    <ClInclude Include="..\Classes\TileGrass3Component.h" />
-    <ClInclude Include="..\Classes\TileGrassComponent.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B2EA0DCE-BA25-4236-9AE3-8297F4ABBA6D}</ProjectGuid>
@@ -206,6 +186,26 @@
       <Command>copy "$(CotEngine)lib\$(Platform)_$(Configuration)\*.dll" "$(SolutionDir)\Build\Products\$(Platform)_$(Configuration)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Classes\BlockSelfComponent.cpp" />
+    <ClCompile Include="..\Classes\ItemViewComponent.cpp" />
+    <ClCompile Include="..\Classes\MapEditor.cpp" />
+    <ClCompile Include="..\Classes\SaveComponent.cpp" />
+    <ClCompile Include="..\Classes\TileGrass2Component.cpp" />
+    <ClCompile Include="..\Classes\TileGrass3Component.cpp" />
+    <ClCompile Include="..\Classes\TileGrassComponent.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Classes\BlockSelfComponent.h" />
+    <ClInclude Include="..\Classes\HeadValue.h" />
+    <ClInclude Include="..\Classes\ItemViewComponent.h" />
+    <ClInclude Include="..\Classes\MapEditor.h" />
+    <ClInclude Include="..\Classes\SaveComponent.h" />
+    <ClInclude Include="..\Classes\TileGrass2Component.h" />
+    <ClInclude Include="..\Classes\TileGrass3Component.h" />
+    <ClInclude Include="..\Classes\TileGrassComponent.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

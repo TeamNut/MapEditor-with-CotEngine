@@ -1,31 +1,25 @@
 #pragma once
 
 #include <CotEngine.h>
-#include "MapEditor.h"
+#include <fstream>
 #include "HeadValue.h"
 #include "tinyxml2\tinyxml2.h"
 
 using namespace Cot;
 
+class MapEditor;
 Component(SaveComponent)
 {
 	COT_COMPONENT(SaveComponent);
 private:
-	std::string _str;
-	float _count;
-
-
-public:
-	SaveComponent* Init(const string& str);
-
-	void OnEnable() override;
-	void Reset() override;
-	void Awake() override;
-	void Start() override;
-	void Update(Time& time) override;
-	void OnDisable() override;
-	void OnDestroy() override;
+	MapEditor* lpMapEditor;
+	KeyListener* keyListener = nullptr;
 
 	void Save();
 	void Load();
+
+public:
+	SaveComponent* Init(MapEditor* lpScene);
+
+	void Update(Time& time) override;
 };
