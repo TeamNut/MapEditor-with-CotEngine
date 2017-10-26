@@ -1,8 +1,8 @@
 #pragma once
 
 //Resolution
-const int RESOLUTION_X = 1920;
-const int RESOLUTION_Y = 600;
+const int RESOLUTION_X = 1280;
+const int RESOLUTION_Y = 720;
 
 //term of grid to grid
 const int DEFAULT_GAP_X = 165;

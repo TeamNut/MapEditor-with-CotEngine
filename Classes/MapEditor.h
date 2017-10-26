@@ -50,6 +50,7 @@ public:
 	void ShowTile(const char*);
 	void HideTile(const char*);
 	bool IsAreaClick(RECT &rt, MouseButton, MouseListener*);
+	bool IsAreaStay(RECT &rt, MouseButton, MouseListener*);
 	bool IsOverlap();
 	bool Init() override;
 };

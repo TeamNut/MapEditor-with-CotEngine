@@ -222,6 +222,22 @@ bool MapEditor::IsAreaClick(RECT &rt, MouseButton bt, MouseListener* mListen)
 	}
 	else return false;
 }
+//Check area click
+bool MapEditor::IsAreaStay(RECT &rt, MouseButton bt, MouseListener* mListen)
+{
+	if (mListen->IsMouseStay(bt))
+	{
+		if ((int)mListen->GetMousePosition().x >= rt.left &&
+			(int)mListen->GetMousePosition().x <= rt.right &&
+			(int)mListen->GetMousePosition().y <= rt.bottom &&
+			(int)mListen->GetMousePosition().y >= rt.top)
+		{
+			return true;
+		}
+		else return false;
+	}
+	else return false;
+}
 
 //Place grid
 void MapEditor::GridPlacing()
