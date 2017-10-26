@@ -4,7 +4,7 @@ This is a MapEditor made with CotEngine. It can make 2D roll playing games` maps
 ## Updated
 * Fixed mechanism about camera move
 * Re-design inner mechanism about key input
-* Now you can ready more tiles safety at the bottom item view to place blocks.
+* Now you can ready more tiles safety at the bottom item view to place blocks
 ***
 
 ## Caution
