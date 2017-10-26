@@ -2,8 +2,9 @@
 This is a MapEditor made with CotEngine. It can make 2D roll playing games` maps and output to a file that included map information with .xml exterior. 
 ***
 ## Updated
-* Fixed method about camera move
-* Re-design inner method about key input
+* Fixed mechanism about camera move
+* Re-design inner mechanism about key input
+* Now you can ready more tiles safety at the bottom item view to place blocks.
 ***
 
 ## Caution
@@ -16,7 +17,7 @@ Open **HeadValue.h** file and modify following values.
 Modify following values in above file.
 * MAX_OBJECT
 
-Also you can change gap of grid to grid placing delicacy. But you have to remember: It tool's object batch method uses *object pooling*. So the MAX_OBJECT grow bigger, become load grow bigger.
+Also you can change gap of grid to grid placing delicacy. But you have to remember: It tool's object batch method uses *object pooling*. So the MAX_OBJECT grow bigger, maybe become load grow bigger.
 
 ## How to use
 ### About place
