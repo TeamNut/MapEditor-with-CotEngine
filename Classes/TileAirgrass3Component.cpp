@@ -1,23 +1,22 @@
-#include "TileGrass3Component.h"
+#include "TileAirgrass3Component.h"
 #include "MapEditor.h"
-
-#define THIS_TILE "tile_grass_03.png"
+#define THIS_TILE "tile_airgrass_03.png"
 #define RADIUS_BLOCK 25 //Area of half of block
 
-TileGrass3Component* TileGrass3Component::Init(MapEditor* lpScene)
-{	
+TileAirgrass3Component* TileAirgrass3Component::Init(MapEditor* lpScene)
+{
 	lpMapEditor = lpScene;
 	myPos = 50;
 
 	return this;
 }
 
-void TileGrass3Component::Update(Time& time)
+void TileAirgrass3Component::Update(Time& time)
 {
 	//Position Control
 	if (IsKeyStay(KeyCode::Comma)) myPos--;
 	if (IsKeyStay(KeyCode::Period)) myPos++;
-	GetOwner()->SetLocalPosition(Vec3(myPos + GAP_OF_BLOCK * 2, RESOLUTION_Y - 85));
+	GetOwner()->SetLocalPosition(Vec3(myPos + GAP_OF_BLOCK * 5, RESOLUTION_Y - 85));
 
 	//Setting tile area
 	Vec3 tempVec3 = GetOwner()->GetLocalPosition();

@@ -6,16 +6,13 @@ SaveComponent* SaveComponent::Init(MapEditor* lpScene)
 {
 	lpMapEditor = lpScene;
 
-	CreateKeyListener();
-	keyListener = GetKeyListener();
-
 	return this;
 }
 
 void SaveComponent::Update(Time& time)
 {
-	if (keyListener->IsKeyDown(KeyCode::F5)) Save();
-	if (keyListener->IsKeyDown(KeyCode::F7)) Load();
+	if (IsKeyDown(KeyCode::F5)) Save();
+	if (IsKeyDown(KeyCode::F7)) Load();
 }
 
 //Ability
@@ -35,6 +32,12 @@ void SaveComponent::Save()
 	root->LinkEndChild(mapDefault);
 	mapDefault->SetAttribute("MaxObject", MAX_OBJECT);
 
+	//Save pivot(root object) position
+	tinyxml2::XMLElement* pivotObject = saveDest.NewElement("Pivot");
+	root->LinkEndChild(pivotObject);
+	pivotObject->SetAttribute("posX", lpMapEditor->root->GetPosition().x);
+	pivotObject->SetAttribute("posY", lpMapEditor->root->GetPosition().y);
+
 	//Send blocks data
 	tinyxml2::XMLElement* block[MAX_OBJECT] = { 0, }; //Declaration pool of object
 	for (int i = 0; i < MAX_OBJECT; i++)
@@ -46,10 +49,10 @@ void SaveComponent::Save()
 		block[i] = saveDest.NewElement(blockName);
 		root->LinkEndChild(block[i]);
 		
-		block[i]->SetAttribute("Sprite", lpMapEditor->Tile_Space[i]->GetComponent<SpriteRenderer>()->GetTexture()->GetFilename().c_str());
-		block[i]->SetAttribute("IsActive", lpMapEditor->Tile_Space[i]->IsActive());
-		block[i]->SetAttribute("GetX", lpMapEditor->Tile_Space[i]->GetPosition().x);
-		block[i]->SetAttribute("GetY", lpMapEditor->Tile_Space[i]->GetPosition().y);
+		block[i]->SetAttribute("Sprite", lpMapEditor->TileSpace[i]->GetComponent<SpriteRenderer>()->GetTexture()->GetFilename().c_str());
+		block[i]->SetAttribute("IsActive", lpMapEditor->TileSpace[i]->IsActive());
+		block[i]->SetAttribute("GetX", lpMapEditor->TileSpace[i]->GetPosition().x);
+		block[i]->SetAttribute("GetY", lpMapEditor->TileSpace[i]->GetPosition().y);
 	}
 
 	//Save at
@@ -97,9 +100,9 @@ void SaveComponent::Load()
 		int getX = lpBlock->IntAttribute("GetX");
 		int getY = lpBlock->IntAttribute("GetY");
 		//Place on the map
-		lpMapEditor->Tile_Space[i]->GetComponent<SpriteRenderer>()->Init(sprite);
-		lpMapEditor->Tile_Space[i]->SetActive(isActive);
-		lpMapEditor->Tile_Space[i]->SetPosition(Vec3(getX, getY));
+		lpMapEditor->TileSpace[i]->GetComponent<SpriteRenderer>()->Init(sprite);
+		lpMapEditor->TileSpace[i]->SetActive(isActive);
+		lpMapEditor->TileSpace[i]->SetPosition(Vec3(getX, getY));
 
 		//Move pointer to the next
 		i++;

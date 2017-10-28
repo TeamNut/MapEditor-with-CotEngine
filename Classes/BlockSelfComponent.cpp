@@ -9,8 +9,6 @@ BlockSelfComponent* BlockSelfComponent::Init(MapEditor* lpScene)
 {
 	lpMapEditor = lpScene;
 
-	CreateMouseListener();
-
 	_renderer = GetOwner()->GetComponent<SpriteRenderer>();
 
 	return this;
@@ -26,7 +24,7 @@ void BlockSelfComponent::Update(Time& time)
 	//selfArea = RECT{ (int)_renderer->GetRect().GetMaxX(), (int)_renderer->GetRect().GetMinY(), (int)_renderer->GetRect().GetMaxX(), (int)_renderer->GetRect().GetMaxY() };
 
 	//Remove
-	if (lpMapEditor->IsAreaStay(selfArea, MouseButton::RButton, GetMouseListener()))
+	if (lpMapEditor->IsAreaStay(selfArea, MouseButton::RButton))
 	{
 		lpMapEditor->DeleteTile(GetOwner());
 	}

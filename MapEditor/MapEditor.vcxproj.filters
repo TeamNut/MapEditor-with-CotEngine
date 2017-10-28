@@ -10,6 +10,9 @@
     <Filter Include="Component\Tiles">
       <UniqueIdentifier>{5b835fcb-96f5-4330-8e04-4639c9402bea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Tiles\grass">
+      <UniqueIdentifier>{998e60ea-5fdd-4239-88c3-f730e5cb41c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -25,14 +28,41 @@
     <ClCompile Include="..\Classes\BlockSelfComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrass2Component.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrass3Component.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrassComponent.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrassLeft2Component.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrassLeft3Component.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrassLeftComponent.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrassRight2Component.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrassRight3Component.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileAirgrassRightComponent.cpp">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\TileGrass2Component.cpp">
-      <Filter>Component\Tiles</Filter>
+      <Filter>Component\Tiles\grass</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\TileGrass3Component.cpp">
-      <Filter>Component\Tiles</Filter>
+      <Filter>Component\Tiles\grass</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\TileGrassComponent.cpp">
-      <Filter>Component\Tiles</Filter>
+      <Filter>Component\Tiles\grass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,17 +78,44 @@
     <ClInclude Include="..\Classes\SaveComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\TileGrass2Component.h">
-      <Filter>Component\Tiles</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TileGrass3Component.h">
-      <Filter>Component\Tiles</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TileGrassComponent.h">
-      <Filter>Component\Tiles</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\HeadValue.h">
       <Filter>Project</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrass2Component.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrass3Component.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrassComponent.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrassLeft2Component.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrassLeft3Component.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrassLeftComponent.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrassRight2Component.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrassRight3Component.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileAirgrassRightComponent.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileGrass2Component.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileGrass3Component.h">
+      <Filter>Component\Tiles\grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileGrassComponent.h">
+      <Filter>Component\Tiles\grass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,16 +5,22 @@
 #define TILE_GRASS_01 "tile_grass_01.png"
 #define TILE_GRASS_02 "tile_grass_02.png"
 #define TILE_GRASS_03 "tile_grass_03.png"
+#define TILE_AIRGRASS_01 "tile_airgrass_01.png"
+#define TILE_AIRGRASS_02 "tile_airgrass_02.png"
+#define TILE_AIRGRASS_03 "tile_airgrass_03.png"
+#define TILE_AIRGRASS_LEFT_01 "tile_airgrass_left_01.png"
+#define TILE_AIRGRASS_LEFT_02 "tile_airgrass_left_02.png"
+#define TILE_AIRGRASS_LEFT_03 "tile_airgrass_left_03.png"
+#define TILE_AIRGRASS_RIGHT_01 "tile_airgrass_right_01.png"
+#define TILE_AIRGRASS_RIGHT_02 "tile_airgrass_right_02.png"
+#define TILE_AIRGRASS_RIGHT_03 "tile_airgrass_right_03.png"
+
 
 using namespace Cot;
 
 bool MapEditor::Init()
 {
 	graphics->SetClearColor(Color(1.0f, 1.0f, 1.0f));
-	CreateKeyListener();
-	CreateMouseListener();
-	keyListener = GetKeyListener();
-	mouseListener = GetMouseListener();
 	//Value initialize
 	gapX = DEFAULT_GAP_X;
 	gapY = DEFAULT_GAP_Y;
@@ -27,45 +33,33 @@ bool MapEditor::Init()
 	this->AddEntity(root);
 
 	//Item view background
-	ob_ItemView = new Entity("ItemViewBackground");
-	//ob_ItemView->AddComponent<ItemViewComponent>();
-	ob_ItemView->SetPosition(Vec3(RESOLUTION_X / 2, RESOLUTION_Y - 85));
-	SpriteRenderer *RenderItemView = ob_ItemView->AddComponent<SpriteRenderer>()->Init("itemView.png");
+	obItemView = new Entity("ItemViewBackground");
+	//obItemView->AddComponent<ItemViewComponent>();
+	obItemView->SetPosition(Vec3(RESOLUTION_X / 2, RESOLUTION_Y - 85));
+	SpriteRenderer *RenderItemView = obItemView->AddComponent<SpriteRenderer>()->Init("itemView.png");
 	RenderItemView->SetColor(Color(1.0f, 1.0f, 1.0f, 0.5f));
 	RenderItemView->SetDepth(0);
-	this->AddEntity(ob_ItemView);
+	this->AddEntity(obItemView);
 
 	//ItemView
-	//Grass tile
-	ob_Tile_Grass1 = new Entity("GRASS1");
-	ob_Tile_Grass1->AddComponent<TileGrassComponent>()->Init(this);
-	SpriteRenderer *RenderTileGrass = ob_Tile_Grass1->AddComponent<SpriteRenderer>()->Init(TILE_GRASS_01);
-	RenderTileGrass->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
-	RenderTileGrass->SetDepth(5);
-	ob_Tile_Grass1->SetLocalScale(Vec3(0.4f, 0.4f));
-	this->AddEntity(ob_Tile_Grass1);
-	//Grass tile 2
-	ob_Tile_Grass2 = new Entity("GRASS2");
-	ob_Tile_Grass2->AddComponent<TileGrass2Component>()->Init(this);
-	SpriteRenderer *RenderTileGrass2 = ob_Tile_Grass2->AddComponent<SpriteRenderer>()->Init(TILE_GRASS_02);
-	RenderTileGrass2->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
-	RenderTileGrass2->SetDepth(5);
-	ob_Tile_Grass2->SetLocalScale(Vec3(0.4f, 0.4f));
-	this->AddEntity(ob_Tile_Grass2);
-	//Grass tile 3
-	ob_Tile_Grass3 = new Entity("GRASS3");
-	ob_Tile_Grass3->AddComponent<TileGrass3Component>()->Init(this);
-	SpriteRenderer *RenderTileGrass3 = ob_Tile_Grass3->AddComponent<SpriteRenderer>()->Init(TILE_GRASS_03);
-	RenderTileGrass3->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
-	RenderTileGrass3->SetDepth(5);
-	ob_Tile_Grass3->SetLocalScale(Vec3(0.4f, 0.4f));
-	this->AddEntity(ob_Tile_Grass3);
+	ReadyTile(obTileGrass1, TILE_GRASS_01)->AddComponent<TileGrassComponent>()->Init(this);
+	ReadyTile(obTileGrass2, TILE_GRASS_02)->AddComponent<TileGrass2Component>()->Init(this);
+	ReadyTile(obTileGrass3, TILE_GRASS_03)->AddComponent<TileGrass3Component>()->Init(this);
+	ReadyTile(obTileAirgrass1, TILE_AIRGRASS_01)->AddComponent<TileAirgrassComponent>()->Init(this);
+	ReadyTile(obTileAirgrass2, TILE_AIRGRASS_02)->AddComponent<TileAirgrass2Component>()->Init(this);
+	ReadyTile(obTileAirgrass3, TILE_AIRGRASS_03)->AddComponent<TileAirgrass3Component>()->Init(this);
+	ReadyTile(obTileAirgrass1, TILE_AIRGRASS_LEFT_01)->AddComponent<TileAirgrassLeftComponent>()->Init(this);
+	ReadyTile(obTileAirgrass2, TILE_AIRGRASS_LEFT_02)->AddComponent<TileAirgrassLeft2Component>()->Init(this);
+	ReadyTile(obTileAirgrass3, TILE_AIRGRASS_LEFT_03)->AddComponent<TileAirgrassLeft3Component>()->Init(this);
+	ReadyTile(obTileAirgrass1, TILE_AIRGRASS_RIGHT_01)->AddComponent<TileAirgrassRightComponent>()->Init(this);
+	ReadyTile(obTileAirgrass2, TILE_AIRGRASS_RIGHT_02)->AddComponent<TileAirgrassRight2Component>()->Init(this);
+	ReadyTile(obTileAirgrass3, TILE_AIRGRASS_RIGHT_03)->AddComponent<TileAirgrassRight3Component>()->Init(this);
 
 	//Pool of a demo tile
-	Tile_for_Show = new Entity("TEMPORARY");
-	Tile_for_Show->AddComponent<SpriteRenderer>()->Init("");
-	Tile_for_Show->SetLocalPosition(Vec3(-200, -200));
-	this->AddEntity(Tile_for_Show);
+	TileForShow = new Entity("");
+	TileForShow->AddComponent<SpriteRenderer>()->Init("");
+	TileForShow->SetLocalPosition(Vec3(-200, -200));
+	this->AddEntity(TileForShow);
 
 	//Pool of in-game tile
 	for (int i = 0; i < MAX_OBJECT; i++)
@@ -73,12 +67,12 @@ bool MapEditor::Init()
 		char cntStr[10] = { 0, };
 		itoa(i, cntStr, 10);
 
-		Tile_Space[i] = new Entity(cntStr);
-		Tile_Space[i]->AddComponent<SpriteRenderer>()->Init("");
-		Tile_Space[i]->AddComponent<BlockSelfComponent>()->Init(this);
-		Tile_Space[i]->SetActive(false);
-		Tile_Space[i]->SetParent(root);
-		this->AddEntity(Tile_Space[i]);
+		TileSpace[i] = new Entity(cntStr);
+		TileSpace[i]->AddComponent<SpriteRenderer>()->Init("");
+		TileSpace[i]->AddComponent<BlockSelfComponent>()->Init(this);
+		TileSpace[i]->SetActive(false);
+		TileSpace[i]->SetParent(root);
+		this->AddEntity(TileSpace[i]);
 	}
 
 	//Temporary solve error about sprite rendering
@@ -110,20 +104,20 @@ void MapEditor::Update(Cot::Time& time)
 	}
 	tempSolution->SetPosition(Vec3(tempSolutionPos, 0));
 	//Revised mouse position by grid
-	revisedX = (int)mouseListener->GetMousePosition().x % gapX < gapX / 2 ?
-				(int)mouseListener->GetMousePosition().x - ((int)mouseListener->GetMousePosition().x % gapX) : gapX + (int)mouseListener->GetMousePosition().x - ((int)mouseListener->GetMousePosition().x % gapX);
-	revisedY = (int)mouseListener->GetMousePosition().y % gapY < gapY / 2 ?
-				(int)mouseListener->GetMousePosition().y - ((int)mouseListener->GetMousePosition().y % gapY) : gapY + (int)mouseListener->GetMousePosition().y - ((int)mouseListener->GetMousePosition().y % gapY);
+	revisedX = (int)GetMousePosition().x % gapX < gapX / 2 ?
+				(int)GetMousePosition().x - ((int)GetMousePosition().x % gapX) : gapX + (int)GetMousePosition().x - ((int)GetMousePosition().x % gapX);
+	revisedY = (int)GetMousePosition().y % gapY < gapY / 2 ?
+				(int)GetMousePosition().y - ((int)GetMousePosition().y % gapY) : gapY + (int)GetMousePosition().y - ((int)GetMousePosition().y % gapY);
 
 	//Fast place
-	if (keyListener->IsKeyDown(KeyCode::E))
+	if (IsKeyDown(KeyCode::E))
 		if (strcmp(lastTile, "") == 0) puts("Cannot found last use");
 		else fastPlace = true;
-	if (keyListener->IsKeyStay(KeyCode::E))
+	if (IsKeyStay(KeyCode::E))
 	{
 		if (strcmp(lastTile, "") != 0) ShowTile(lastTile);
 	}
-	if (this->GetKeyListener()->IsKeyUp(KeyCode::E) && fastPlace == true)
+	if (IsKeyUp(KeyCode::E) && fastPlace == true)
 	{
 		PlaceTile(lastTile);
 		HideTile(lastTile);
@@ -131,15 +125,27 @@ void MapEditor::Update(Cot::Time& time)
 	}
 
 	//Root move
-	if (keyListener->IsKeyDown(KeyCode::A)) nowX -= DEFAULT_GAP_X;
-	if (keyListener->IsKeyDown(KeyCode::D))
+	if (IsKeyDown(KeyCode::A)) nowX -= DEFAULT_GAP_X;
+	if (IsKeyDown(KeyCode::D))
 	{
 		nowX += DEFAULT_GAP_X;
 	
 	}
-	if (keyListener->IsKeyDown(KeyCode::W)) nowY -= DEFAULT_GAP_Y;
-	if (keyListener->IsKeyDown(KeyCode::S)) nowY += DEFAULT_GAP_Y;
+	if (IsKeyDown(KeyCode::W)) nowY -= DEFAULT_GAP_Y;
+	if (IsKeyDown(KeyCode::S)) nowY += DEFAULT_GAP_Y;
 	root->SetPosition(Vec3(nowX, nowY));
+}
+
+//Ready tile
+Cot::Entity* MapEditor::ReadyTile(Cot::Entity* obTile, const char* tileName)
+{
+	obTile = new Entity("");
+	TileRenderer = obTile->AddComponent<SpriteRenderer>()->Init(tileName);
+	TileRenderer->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+	TileRenderer->SetDepth(5);
+	obTile->SetLocalScale(Vec3(0.4f, 0.4f));
+	this->AddEntity(obTile);
+	return obTile;
 }
 
 //Place tile
@@ -148,7 +154,7 @@ void MapEditor::PlaceTile(const char* tileName)
 	int pointer;
 	for (pointer = 0; pointer < MAX_OBJECT; pointer++)
 	{
-		if (Tile_Space[pointer]->IsActive() == false) //If isn't active,
+		if (TileSpace[pointer]->IsActive() == false) //If isn't active,
 		{
 #if OVERLAP == false
 			//If overlap with something other, stop placing tile
@@ -158,9 +164,9 @@ void MapEditor::PlaceTile(const char* tileName)
 				break;
 			}
 #endif
-			Tile_Space[pointer]->GetComponent<SpriteRenderer>()->Init(tileName);
-			Tile_Space[pointer]->SetPosition(Vec3(revisedX, revisedY));
-			Tile_Space[pointer]->SetActive(true);
+			TileSpace[pointer]->GetComponent<SpriteRenderer>()->Init(tileName);
+			TileSpace[pointer]->SetPosition(Vec3(revisedX, revisedY));
+			TileSpace[pointer]->SetActive(true);
 			lastTile = tileName;
 
 			printf("RevisedPos: (%d, %d)\n", revisedX, revisedY);
@@ -183,8 +189,8 @@ bool MapEditor::IsOverlap()
 	Vec3 targetPos = Vec3(revisedX, revisedY);
 	for (int i = 0; i < MAX_OBJECT; i++)
 	{
-		if ((int)targetPos.x == (int)Tile_Space[i]->GetPosition().x &&
-			(int)targetPos.y == (int)Tile_Space[i]->GetPosition().y)
+		if ((int)targetPos.x == (int)TileSpace[i]->GetPosition().x &&
+			(int)targetPos.y == (int)TileSpace[i]->GetPosition().y)
 		{
 			return true;
 		}
@@ -195,26 +201,26 @@ bool MapEditor::IsOverlap()
 //Show tile
 void MapEditor::ShowTile(const char* tileName)
 {
-	Tile_for_Show->SetActive(true);
-	SpriteRenderer* RenderTemp = Tile_for_Show->GetComponent<SpriteRenderer>()->Init(tileName);
+	TileForShow->SetActive(true);
+	SpriteRenderer* RenderTemp = TileForShow->GetComponent<SpriteRenderer>()->Init(tileName);
 	RenderTemp->SetDepth(6);
-	Tile_for_Show->SetLocalPosition(mouseListener->GetMousePosition());
+	TileForShow->SetLocalPosition(GetMousePosition());
 }
 //Hide tile
 void MapEditor::HideTile(const char* tileName)
 {
-	Tile_for_Show->SetActive(false);
+	TileForShow->SetActive(false);
 }
 
 //Check area click
-bool MapEditor::IsAreaClick(RECT &rt, MouseButton bt, MouseListener* mListen)
+bool MapEditor::IsAreaClick(RECT &rt, MouseButton bt)
 {
-	if (mListen->IsMouseDown(bt))
+	if (IsMouseDown(bt))
 	{
-		if ((int)mListen->GetMousePosition().x >= rt.left &&
-			(int)mListen->GetMousePosition().x <= rt.right &&
-			(int)mListen->GetMousePosition().y <= rt.bottom &&
-			(int)mListen->GetMousePosition().y >= rt.top)
+		if ((int)GetMousePosition().x >= rt.left &&
+			(int)GetMousePosition().x <= rt.right &&
+			(int)GetMousePosition().y <= rt.bottom &&
+			(int)GetMousePosition().y >= rt.top)
 		{
 			return true;
 		}
@@ -223,14 +229,14 @@ bool MapEditor::IsAreaClick(RECT &rt, MouseButton bt, MouseListener* mListen)
 	else return false;
 }
 //Check area click
-bool MapEditor::IsAreaStay(RECT &rt, MouseButton bt, MouseListener* mListen)
+bool MapEditor::IsAreaStay(RECT &rt, MouseButton bt)
 {
-	if (mListen->IsMouseStay(bt))
+	if (IsMouseStay(bt))
 	{
-		if ((int)mListen->GetMousePosition().x >= rt.left &&
-			(int)mListen->GetMousePosition().x <= rt.right &&
-			(int)mListen->GetMousePosition().y <= rt.bottom &&
-			(int)mListen->GetMousePosition().y >= rt.top)
+		if ((int)GetMousePosition().x >= rt.left &&
+			(int)GetMousePosition().x <= rt.right &&
+			(int)GetMousePosition().y <= rt.bottom &&
+			(int)GetMousePosition().y >= rt.top)
 		{
 			return true;
 		}

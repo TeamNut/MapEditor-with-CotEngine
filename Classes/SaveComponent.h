@@ -13,7 +13,6 @@ Component(SaveComponent)
 	COT_COMPONENT(SaveComponent);
 private:
 	MapEditor* lpMapEditor;
-	KeyListener* keyListener = nullptr;
 
 	void Save();
 	void Load();

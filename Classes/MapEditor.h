@@ -6,6 +6,15 @@
 #include "TileGrassComponent.h"
 #include "TileGrass2Component.h"
 #include "TileGrass3Component.h"
+#include "TileAirgrassComponent.h"
+#include "TileAirgrass2Component.h"
+#include "TileAirgrass3Component.h"
+#include "TileAirgrassLeftComponent.h"
+#include "TileAirgrassLeft2Component.h"
+#include "TileAirgrassLeft3Component.h"
+#include "TileAirgrassRightComponent.h"
+#include "TileAirgrassRight2Component.h"
+#include "TileAirgrassRight3Component.h"
 #include "BlockSelfComponent.h"
 #include "SaveComponent.h"
 //include component
@@ -14,18 +23,19 @@ class MapEditor
 	: public Cot::Scene
 {
 private:
-	KeyListener* keyListener = nullptr;
-	MouseListener* mouseListener = nullptr;
+	SpriteRenderer* TileRenderer = nullptr;
 
-	Cot::Entity* Tile_for_Show;
-	Cot::Entity* ob_ItemView;
-	Cot::Entity* root;
+	Cot::Entity* TileForShow;
+	Cot::Entity* obItemView;
 	Cot::Entity* gridLine[40] = { 0, };
 	Cot::Entity* TempEntity; //Use only for Entity address save
 	Cot::Entity* tempSolution;
-	Cot::Entity* ob_Tile_Grass1;
-	Cot::Entity* ob_Tile_Grass2;
-	Cot::Entity* ob_Tile_Grass3;
+	Cot::Entity* obTileGrass1;
+	Cot::Entity* obTileGrass2;
+	Cot::Entity* obTileGrass3;
+	Cot::Entity* obTileAirgrass1;
+	Cot::Entity* obTileAirgrass2;
+	Cot::Entity* obTileAirgrass3;
 
 	const char* lastTile; //Save last used tile's name
 	//About grid
@@ -42,15 +52,17 @@ private:
 	bool fastPlace;
 
 public:
-	Cot::Entity* Tile_Space[MAX_OBJECT];
+	Cot::Entity* root;
+	Cot::Entity* TileSpace[MAX_OBJECT];
+	Cot::Entity* ReadyTile(Cot::Entity*, const char*);
 	void Update(Cot::Time& time) override;
 	void GridPlacing();
 	void PlaceTile(const char*);
 	void DeleteTile(Cot::Entity*);
 	void ShowTile(const char*);
 	void HideTile(const char*);
-	bool IsAreaClick(RECT &rt, MouseButton, MouseListener*);
-	bool IsAreaStay(RECT &rt, MouseButton, MouseListener*);
+	bool IsAreaClick(RECT &rt, MouseButton);
+	bool IsAreaStay(RECT &rt, MouseButton);
 	bool IsOverlap();
 	bool Init() override;
 };

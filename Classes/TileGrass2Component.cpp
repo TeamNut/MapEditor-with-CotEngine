@@ -7,12 +7,8 @@
 
 TileGrass2Component* TileGrass2Component::Init(MapEditor* lpScene)
 {
-	puts("Enable grass2");
-
 	lpMapEditor = lpScene;
-
-	CreateKeyListener();
-	CreateMouseListener();
+	myPos = 50;
 
 	return this;
 }
@@ -20,9 +16,8 @@ TileGrass2Component* TileGrass2Component::Init(MapEditor* lpScene)
 void TileGrass2Component::Update(Time& time)
 {
 	//Position Control
-	if (GetKeyListener()->IsKeyStay(KeyCode::Comma) && myPos > 50) myPos--;
-	if (myPos <= 50) myPos = 50;
-	if (GetKeyListener()->IsKeyStay(KeyCode::Period)) myPos++;
+	if (IsKeyStay(KeyCode::Comma)) myPos--;
+	if (IsKeyStay(KeyCode::Period)) myPos++;
 	GetOwner()->SetLocalPosition(Vec3(myPos + GAP_OF_BLOCK, RESOLUTION_Y - 85));
 
 	//Setting tile area
@@ -30,7 +25,7 @@ void TileGrass2Component::Update(Time& time)
 	rtTileArea = { (int)tempVec3.x - RADIUS_BLOCK, (int)tempVec3.y - RADIUS_BLOCK, (int)tempVec3.x + RADIUS_BLOCK, (int)tempVec3.y + RADIUS_BLOCK };
 
 	//Item drag and drop
-	if (lpMapEditor->IsAreaClick(rtTileArea, MouseButton::LButton, GetMouseListener()))
+	if (lpMapEditor->IsAreaClick(rtTileArea, MouseButton::LButton))
 	{
 		isCarry = true;
 	}
@@ -38,7 +33,7 @@ void TileGrass2Component::Update(Time& time)
 	{
 		lpMapEditor->ShowTile(THIS_TILE);
 
-		if (GetMouseListener()->IsMouseUp(MouseButton::LButton))
+		if (IsMouseUp(MouseButton::LButton))
 		{
 			lpMapEditor->HideTile(THIS_TILE);
 			lpMapEditor->PlaceTile(THIS_TILE);
