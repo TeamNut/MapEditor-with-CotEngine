@@ -2,14 +2,8 @@
 This is a MapEditor made with CotEngine. It can make 2D roll playing games` maps and output to a file that included map information with .xml exterior. 
 ***
 ## Updated
-<<<<<<< HEAD
 * Now you can place new tiles
 * Updated compatibility between MapEditor and CotEngine_v1.1
-=======
-* Fixed mechanism about camera move
-* Re-design inner mechanism about key input
-* Now you can ready more tiles safety at the bottom item view to place blocks
->>>>>>> c97350ee1a82c18bee7d219e8e4ff200115a5e78
 ***
 
 ## Caution
